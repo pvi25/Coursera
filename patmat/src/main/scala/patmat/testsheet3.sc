@@ -95,4 +95,5 @@ object testsheet3 {
   'z' :: data                                     //> res32: List[Char] = List(z, a, a, a, b, c, c, a)
   
   1 + 1                                           //> res33: Int(2) = 2
+  2+2                                             //> res34: Int(4) = 4
 }

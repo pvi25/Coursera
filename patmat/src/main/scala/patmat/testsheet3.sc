@@ -94,6 +94,12 @@ object testsheet3 {
   //data ::: 'z'
   'z' :: data                                     //> res32: List[Char] = List(z, a, a, a, b, c, c, a)
   
-  1 + 1                                           //> res33: Int(2) = 2
-  2+2                                             //> res34: Int(4) = 4
+	l2 map (x => x.toString mkString "-")     //> res33: List[String] = List(6, 3, 1-2, 9, 3-4, 2)
+	l2 map (x => x.toString )                 //> res34: List[String] = List(6, 3, 12, 9, 34, 2)
+	l2 map (x => x.toString) mkString ("(","-",")")
+                                                  //> res35: String = (6-3-12-9-34-2)
+	msort(l2)(_ < _) map (x => x.toString mkString "-")
+                                                  //> res36: List[String] = List(2, 3, 6, 9, 1-2, 3-4)
+ 
+  "abc" mkString "-"                              //> res37: String = a-b-c
 }

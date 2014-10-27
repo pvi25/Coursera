@@ -10,7 +10,7 @@ trait Solver extends GameDef {
   /**
    * Returns `true` if the block `b` is at the final position
    */
-  def done(b: Block): Boolean = if (b.isStanding && b.b1 == goal) true else false
+  def done(b: Block): Boolean = b.isStanding && b.b1 == goal
 
   /**
    * This function takes two arguments: the current block `b` and
@@ -106,5 +106,5 @@ trait Solver extends GameDef {
    * position.
    */
  // lazy val solution: List[Move] = pathsToGoal sortWith ((x,y) => x._2.length < y._2.length).head._2
-  lazy val solution: List[Move] = pathsToGoal.head._2
+  lazy val solution: List[Move] = if (pathsToGoal.isEmpty) List() else pathsToGoal.head._2
 }

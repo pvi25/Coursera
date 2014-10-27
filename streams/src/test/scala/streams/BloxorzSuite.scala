@@ -44,10 +44,12 @@ class BloxorzSuite extends FunSuite {
       /* terrain for level 1*/
 
     val level =
-    """oooo
+/*    """oooo
       |oSoo
       |ooTo
-      |oooo""".stripMargin
+      |oooo""".stripMargin*/
+    """oSo
+      |ooT""".stripMargin
 
     val optsolution = List(Right, Right, Down, Right, Right, Right, Down)
   }
@@ -102,6 +104,12 @@ class BloxorzSuite extends FunSuite {
   test("optimal solution length for level 1") {
     new Level1 {
       assert(solution.length == optsolution.length)
+    }
+  }
+  
+  test("optimal solution for level 2") {
+    new Level2 {
+      assert(solve(solution) === List())
     }
   }
 }

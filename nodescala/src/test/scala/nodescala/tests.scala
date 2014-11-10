@@ -34,6 +34,54 @@ class NodeScalaSuite extends FunSuite {
     }
   }
 
+  test("All Futures should be created - exception") {
+    val always = Future(517)
+    val never = Future.never[Int]
+    val list = List(always, never)
+
+    try {
+      Await.result(Future.all(list), 1 second)
+      assert(false)
+    } catch {
+      case t: TimeoutException => // ok!
+    }
+  }
+
+  test("All Futures should be created") {
+    val always1 = Future(517)
+    val always2 = Future(123)
+    val list = List(always1, always2)
+
+    assert(Await.result(Future.all(list), 1 second) == List(517, 123))
+
+  }
+
+  test("One Future should be created") {
+    val always1 = Future({Thread.sleep(400); 517})
+    val always2 = Future({Thread.sleep(200); 213})
+    val list = List(always1, always2)
+
+    assert(Await.result(Future.any(list), 1 second) === 213)
+
+  }
+  
+  test("One Future failure") {
+    val t1 = Future({Thread.sleep(400); 517})
+    val t2 = Future({Thread.sleep(200); 213})
+    val t3 = Future({throw new TimeoutException})  //waarom wordt deze niet gekozen????
+    val list = List(t1, t2, t3)
+
+    try {
+      Await.result(Future.any(list), 1 second)
+      assert(false)
+    } catch {
+      case t: TimeoutException => // ok!
+    }
+    //assert(Await.result(Future.any(list), 1 second) === 213)
+
+  }
+  
+  
   test("CancellationTokenSource should allow stopping the computation") {
     val cts = CancellationTokenSource()
     val ct = cts.cancellationToken
